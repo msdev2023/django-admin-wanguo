@@ -1,0 +1,116 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-03-13 08:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: djwanguo/urls.py:20 djwanguo/urls.py:21 djwanguo/urls.py:22
+msgid "万国评标专家库管理系统"
+msgstr ""
+
+#: expert/admin.py:18 expert/admin.py:29 expert/models.py:28
+#: expert/templates/admin/expert/display_experts.html:24
+msgid "User Name"
+msgstr "姓名"
+
+#: expert/admin.py:19 expert/admin.py:30 expert/models.py:30
+#: expert/templates/admin/expert/display_experts.html:25
+msgid "Phone Number"
+msgstr "手机号码"
+
+#: expert/admin.py:21 expert/admin.py:31 expert/models.py:22
+#: expert/models.py:32 expert/templates/admin/expert/display_experts.html:23
+msgid "Sector"
+msgstr "专业"
+
+#: expert/admin.py:25 expert/admin.py:32 expert/models.py:40
+msgid "Weight"
+msgstr "权重"
+
+#: expert/admin.py:99
+#, python-format
+msgid "The number of %s experts is not enough."
+msgstr "%s类专家库数量不足，抽取人数少于预期。"
+
+#: expert/admin.py:104
+#, python-format
+msgid "Display Experts: %s"
+msgstr "专家抽取结果：%s"
+
+#: expert/admin.py:151
+msgid "View Experts"
+msgstr "查看专家抽取结果"
+
+#: expert/apps.py:8
+msgid "Projects & Experts Management"
+msgstr "项目与专家库管理"
+
+#: expert/models.py:16
+msgid "Sector Name"
+msgstr "专业名称"
+
+#: expert/models.py:23
+msgid "Sectors"
+msgstr "专业"
+
+#: expert/models.py:38
+msgid "The higher the number, the higher the probability of being selected"
+msgstr "数字越大被抽中的概率越大"
+
+#: expert/models.py:47
+msgid "Expert"
+msgstr "专家"
+
+#: expert/models.py:48
+msgid "Experts"
+msgstr "专家库"
+
+#: expert/models.py:53
+msgid "Project Name"
+msgstr "项目名称"
+
+#: expert/models.py:59
+msgid "Project"
+msgstr "项目"
+
+#: expert/models.py:60
+msgid "Projects"
+msgstr "项目"
+
+#: expert/models.py:66
+msgid "Select a sector"
+msgstr "专业类型"
+
+#: expert/models.py:68
+msgid "Select the number of experts"
+msgstr "抽取专家数量"
+
+#: expert/models.py:75
+msgid "Project Item"
+msgstr "专业类型"
+
+#: expert/models.py:76
+msgid "Project Items"
+msgstr "选择专业类型"
+
+#: expert/templates/admin/expert/display_experts.html:6
+msgid "Home"
+msgstr ""
+
+#: expert/templates/admin/expert/display_experts.html:10
+msgid "Display Experts"
+msgstr "专家抽取结果"
+
