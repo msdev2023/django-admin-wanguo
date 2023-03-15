@@ -8,7 +8,7 @@
 
     `docker run -d --name djwanguo -e DJANGO_DEBUG=1 -p 8000:8000 -v $(pwd):/app djwanguo:0.1 python manage.py runserver 0.0.0.0:8000`
 
-3. Create Superuser
+3. Create Superuser (NOTICE: EXECUTE THIS ONLY WHEN FIRST SETUP)
 
     `docker exec -it djwanguo python manage.py createsuperuser`
 
@@ -32,4 +32,8 @@
 
 3. Start services
 
-    `docker-compose up -d`
+    `docker compose up -d`
+
+4. Create Superuser (NOTICE: EXECUTE THIS ONLY WHEN FIRST SETUP)
+
+    `docker compose exec app python manage.py createsuperuser`
