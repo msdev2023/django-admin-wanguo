@@ -26,6 +26,8 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY') or secrets.token_urlsafe(66)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG')  or False
 
+ADMIN_TITLE = os.getenv('DJANGO_ADMIN_TITLE') or ''
+
 ALLOWED_HOSTS = ['*']
 
 
