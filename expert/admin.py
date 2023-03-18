@@ -11,7 +11,7 @@ from import_export import fields, resources
 from import_export.admin import ImportMixin
 from import_export.widgets import ForeignKeyWidget
 
-from .models import Expert, Project, ProjectItem, Sector
+from . import models
 
 
 class ExpertResource(resources.ModelResource):
@@ -20,8 +20,9 @@ class ExpertResource(resources.ModelResource):
     sector = fields.Field(
         column_name=_("Sector"),
         attribute="sector",
-        widget=ForeignKeyWidget(Sector, field="name"),
+        widget=ForeignKeyWidget(models.Sector, field="name"),
     )
+    company = fields.Field(column_name=_("Company"), attribute="company")
     weight = fields.Field(column_name=_("Weight"), attribute="weight")
 
     def before_import_row(self, row, row_number=None, **kwargs):
@@ -29,6 +30,7 @@ class ExpertResource(resources.ModelResource):
             _("User Name"): "username",
             _("Phone Number"): "phone",
             _("Sector"): "sector",
+            _("Company"): "company",
             _("Weight"): "weight",
         }
         for k, v in columns.items():
@@ -36,34 +38,54 @@ class ExpertResource(resources.ModelResource):
                 row[v] = row[k]
 
         sector_name = row["sector"]
-        Sector.objects.get_or_create(name=sector_name, defaults=dict(name=sector_name))
+        models.Sector.objects.get_or_create(
+            name=sector_name, defaults=dict(name=sector_name)
+        )
         return super().before_import_row(row, row_number, **kwargs)
 
     class Meta:
-        model = Expert
-        fields = ("username", "phone", "sector", "weight")
+        model = models.Expert
+        fields = ("username", "phone", "sector", "company", "weight")
         import_id_fields = ("username", "phone")
 
 
-@admin.register(Expert)
+@admin.register(models.Expert)
 class ExpertAdmin(ImportMixin, admin.ModelAdmin):
     resource_classes = [ExpertResource]
-    list_display = ("username", "phone", "sector", "weight")
+    list_display = ("username", "phone", "sector", "company")
 
 
-@admin.register(Sector)
+@admin.register(models.Sector)
 class SectorAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
 
-class ProjectItemInline(admin.TabularInline):
-    model = ProjectItem
+@admin.register(models.ProjectBlackList)
+class ProjectBlackListAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(models.ProjectItem)
+class ProjectBlackListAdmin(admin.ModelAdmin):
+    pass
+
+
+class ProjectBlackListInline(admin.TabularInline):
+    model = models.ProjectBlackList
     exclude = ("experts",)
 
 
-@admin.register(Project)
+class ProjectItemInline(admin.TabularInline):
+    model = models.ProjectItem
+    exclude = ("experts",)
+
+
+@admin.register(models.Project)
 class ProjectAdmin(admin.ModelAdmin):
-    inlines = (ProjectItemInline,)
+    inlines = (
+        ProjectBlackListInline,
+        ProjectItemInline,
+    )
     actions = ["display_experts_action"]
 
     def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
@@ -127,8 +149,11 @@ class ProjectAdmin(admin.ModelAdmin):
 
     def _response_post_save(self, request, obj):
         print(f"-- generate random experts: {obj}")
+        block_companies = [x.company for x in obj.projectblacklist_set.all()]
         for item in obj.projectitem_set.all():
-            experts = item.random_experts(item.sector, item.count)
+            experts = item.random_experts(
+                item.sector, item.count, companies=block_companies
+            )
             item.experts.clear()
             item.experts.add(*experts)
             item.save()

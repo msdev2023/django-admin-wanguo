@@ -1,5 +1,6 @@
 import numpy as np
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 EXPERT_WEIGHT = (
@@ -31,6 +32,7 @@ class Expert(models.Model):
     sector = models.ForeignKey(
         Sector, db_index=True, on_delete=models.PROTECT, verbose_name=_("Sector")
     )
+    company = models.CharField(max_length=128, default="", verbose_name=_("Company"))
     weight = models.SmallIntegerField(
         default=1,
         choices=EXPERT_WEIGHT,
@@ -60,6 +62,20 @@ class Project(models.Model):
         verbose_name_plural = _("Projects")
 
 
+class ProjectBlackList(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    company = models.CharField(
+        max_length=128, verbose_name=_("Select a company to block")
+    )
+
+    def __str__(self):
+        return f"#{self.id}-{self.company}"
+
+    class Meta:
+        verbose_name = _("Project BlackList")
+        verbose_name_plural = _("Project BlackList")
+
+
 class ProjectItem(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     sector = models.ForeignKey(
@@ -76,8 +92,10 @@ class ProjectItem(models.Model):
         verbose_name_plural = _("Project Items")
 
     @classmethod
-    def random_experts(cls, sector, count):
-        q = Expert.objects.filter(sector=sector).all()
+    def random_experts(cls, sector, count, companies=None):
+        q = Expert.objects.filter(sector=sector)
+        if companies:
+            q = q.filter(~Q(company__in=companies))
         if q.count() <= count:
             return [x for x in q]
 

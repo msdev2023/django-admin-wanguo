@@ -23,6 +23,7 @@
             <th scope="col">{% translate 'Sector' %}</th>
             <th scope="col">{% translate 'User Name' %}</th>
             <th scope="col">{% translate 'Phone Number' %}</th>
+            <th scope="col">{% translate 'Company' %}</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
             <th scope="row">{{ row.sector.name }}</th>
             <td>{{ row.username }}</td>
             <td>{{ row.phone }}</td>
+            <td>{{ row.company }}</td>
         </tr>
         {% endfor %}
         </tbody>
