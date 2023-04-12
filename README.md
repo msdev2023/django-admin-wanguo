@@ -28,6 +28,7 @@
 
     ```
     DJANGO_SECRET_KEY=w5vB35EEzYk37UBx4yxe0nVT_F2isnaMjxRuKUFDXdtdEnj2BXm0gPgx1hCE45BtpDSMDs26PhjIJjXPxQ-kjT2w
+    DJANGO_ADMIN_TITLE=<Use-your-own-site-TITLE>
     ```
 
 3. Start services
